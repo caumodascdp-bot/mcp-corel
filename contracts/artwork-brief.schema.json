@@ -1,0 +1,129 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mcp-corel.local/schemas/artwork-brief.schema.json",
+  "title": "ArtworkBrief",
+  "description": "Schema para briefings estruturados de criação e edição gráfica vetorial no CorelDRAW.",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Título identificador do projeto de arte."
+    },
+    "target_medium": {
+      "type": "string",
+      "enum": ["print", "digital"],
+      "description": "Meio final de destino: 'print' para gráfica e impressão física; 'digital' para telas e redes sociais."
+    },
+    "dimensions": {
+      "type": "object",
+      "description": "Dimensões físicas do documento.",
+      "properties": {
+        "width_mm": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Largura da página final em milímetros."
+        },
+        "height_mm": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Altura da página final em milímetros."
+        },
+        "bleed_mm": {
+          "type": "number",
+          "minimum": 0,
+          "default": 3.0,
+          "description": "Sangria técnica externa além da borda de corte em milímetros."
+        },
+        "safety_margin_mm": {
+          "type": "number",
+          "minimum": 0,
+          "default": 5.0,
+          "description": "Margem interna de segurança em relação ao corte em milímetros."
+        }
+      },
+      "required": ["width_mm", "height_mm"]
+    },
+    "color_profile": {
+      "type": "string",
+      "enum": ["CMYK", "RGB"],
+      "default": "CMYK",
+      "description": "Espaço de cores primário do documento."
+    },
+    "content": {
+      "type": "object",
+      "description": "Textos literais a serem renderizados na arte.",
+      "properties": {
+        "headline": {
+          "type": "string",
+          "description": "Título de maior destaque visual."
+        },
+        "subheadline": {
+          "type": "string",
+          "description": "Subtítulo de apoio."
+        },
+        "body_text": {
+          "type": "string",
+          "description": "Corpo de texto explicativo ou descrições."
+        },
+        "call_to_action": {
+          "type": "string",
+          "description": "Chamada para ação principal (ex: 'Compre Agora', 'Visite nosso site')."
+        },
+        "contact_info": {
+          "type": "object",
+          "description": "Dados de contato comercial.",
+          "properties": {
+            "phone": { "type": "string" },
+            "whatsapp": { "type": "string" },
+            "email": { "type": "string" },
+            "website": { "type": "string" },
+            "address": { "type": "string" }
+          }
+        }
+      },
+      "required": ["headline"]
+    },
+    "assets": {
+      "type": "array",
+      "description": "Lista de ativos externos a serem importados na composição.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "asset_type": {
+            "type": "string",
+            "enum": ["logo", "photo", "icon", "background"]
+          },
+          "file_path": {
+            "type": "string",
+            "description": "Caminho relativo do arquivo contido dentro da pasta segura de artefatos."
+          },
+          "position_hint": {
+            "type": "string",
+            "enum": ["top_center", "top_left", "top_right", "center", "bottom_center", "bottom_left", "bottom_right"]
+          }
+        },
+        "required": ["asset_type", "file_path"]
+      }
+    },
+    "style_guide": {
+      "type": "object",
+      "description": "Diretrizes estéticas e visuais.",
+      "properties": {
+        "palette": {
+          "type": "object",
+          "properties": {
+            "primary": { "type": "string" },
+            "secondary": { "type": "string" },
+            "background": { "type": "string" },
+            "accent": { "type": "string" }
+          }
+        },
+        "font_family": {
+          "type": "string",
+          "default": "Arial"
+        }
+      }
+    }
+  },
+  "required": ["title", "target_medium", "dimensions", "color_profile", "content"]
+}

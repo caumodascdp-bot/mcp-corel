@@ -1,0 +1,63 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mcp-corel"
+version = "0.1.0"
+description = "Servidor MCP e orquestração para automação do CorelDRAW 2023 via IA no Windows 10"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+    { name = "Equipe MCP Corel" }
+]
+keywords = ["mcp", "coreldraw", "automation", "vector-graphics", "ai-agents"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Microsoft :: Windows :: Windows 10",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Graphics",
+]
+
+dependencies = [
+    "mcp>=1.0.0",
+    "pydantic>=2.6.0",
+    "pywin32>=306; sys_platform == 'win32'",
+    "aiosqlite>=0.20.0",
+    "pillow>=10.2.0",
+    "structlog>=24.1.0",
+    "python-dotenv>=1.0.1",
+]
+
+[project.optional-dependencies]
+telegram = [
+    "python-telegram-bot>=21.0",
+]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.3.0",
+    "mypy>=1.9.0",
+]
+
+[project.scripts]
+mcp-corel = "mcp_corel.mcp.server:main"
+mcp-corel-diag = "mcp_corel.corel.diagnostics:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp_corel"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

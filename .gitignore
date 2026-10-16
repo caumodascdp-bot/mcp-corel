@@ -1,0 +1,68 @@
+# Ambiente Python e virtuais
+.venv/
+venv/
+ENV/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testes e cobertura
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Variáveis de ambiente e segredos
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.pfx
+
+# Logs e arquivos temporários de execução
+logs/*.log
+logs/*.jsonl
+!logs/.gitkeep
+data/jobs/*
+!data/jobs/.gitkeep
+data/previews/*
+!data/previews/.gitkeep
+data/artifacts/*
+!data/artifacts/.gitkeep
+*.tmp
+*.bak
+
+# Arquivos do CorelDRAW temporários e backups
+@*.cdr
+Backup_of_*.cdr
+*.$$$
+*.cdt
+
+# IDEs e editores de texto
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db

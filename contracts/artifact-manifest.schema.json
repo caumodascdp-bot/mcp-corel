@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mcp-corel.local/schemas/artifact-manifest.schema.json",
+  "title": "ArtifactManifest",
+  "description": "Schema para o manifesto de arquivos e artefatos gerados por uma tarefa no MCP Corel.",
+  "type": "object",
+  "properties": {
+    "job_id": {
+      "type": "integer",
+      "description": "Identificador único da tarefa geradora."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ISO 8601 da criação do manifesto."
+    },
+    "document_name": {
+      "type": "string",
+      "description": "Nome canônico do documento gráfico."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["succeeded", "failed", "cancelled"]
+    },
+    "artifacts": {
+      "type": "array",
+      "description": "Lista de arquivos produzidos pela execução da tarefa.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "artifact_type": {
+            "type": "string",
+            "enum": ["master_cdr", "preview_png", "export_pdf", "export_eps", "export_svg", "log_file"]
+          },
+          "relative_path": {
+            "type": "string",
+            "description": "Caminho do arquivo relativo à pasta segura data/."
+          },
+          "file_name": {
+            "type": "string"
+          },
+          "size_bytes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{64}$",
+            "description": "Hash criptográfico SHA-256 para atestar a integridade do arquivo."
+          }
+        },
+        "required": ["artifact_type", "relative_path", "file_name", "size_bytes", "sha256"]
+      }
+    },
+    "preflight_summary": {
+      "type": "object",
+      "properties": {
+        "is_valid": { "type": "boolean" },
+        "color_space": { "type": "string" },
+        "bleed_verified": { "type": "boolean" },
+        "fonts_converted_to_curves": { "type": "boolean" }
+      },
+      "required": ["is_valid"]
+    }
+  },
+  "required": ["job_id", "created_at", "document_name", "status", "artifacts"]
+}
